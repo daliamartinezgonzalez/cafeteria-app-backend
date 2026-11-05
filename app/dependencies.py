@@ -6,6 +6,9 @@ from app.database import get_db
 from app.security import verificar_token
 from models.usuario import Usuario
 
+from models.permiso import Permiso
+from models.rol_permiso import RolPermiso
+
 bearer_scheme = HTTPBearer()
 
 def obtener_usuario_actual(
@@ -40,3 +43,28 @@ def obtener_usuario_actual(
         )
 
     return usuario
+
+def requiere_permiso(nombre_permiso: str):
+
+    def verificar_permiso(
+        usuario: Usuario = Depends(obtener_usuario_actual),
+        db: Session = Depends(get_db)
+    ):
+
+        permiso = db.query(Permiso).join(
+            RolPermiso,
+            Permiso.id == RolPermiso.id_permiso
+        ).filter(
+            RolPermiso.id_rol == usuario.id_rol,
+            Permiso.nombre == nombre_permiso
+        ).first()
+
+        if permiso is None:
+            raise HTTPException(
+                status_code=403,
+                detail="No tienes permiso para realizar esta acción"
+            )
+
+        return usuario
+
+    return verificar_permiso
