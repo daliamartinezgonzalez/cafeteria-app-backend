@@ -17,3 +17,5 @@ python-dotenv
 pydantic[email]
 
 alembic
+
+pwdlib[argon2]
