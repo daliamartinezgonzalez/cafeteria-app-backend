@@ -16,6 +16,11 @@ python-dotenv
 # Validación de datos y correos electrónicos
 pydantic[email]
 
+# controlar los cambios de la base de datos
 alembic
 
+# encriptar contraseñas
 pwdlib[argon2]
+
+# para autenticacion mediente tokend
+PyJWT

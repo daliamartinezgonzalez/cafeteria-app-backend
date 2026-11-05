@@ -10,6 +10,7 @@ from models.rol_permiso import RolPermiso
 from routers.usuarios import router as usuarios_router
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from routers.auth import router as auth_router
 
 app = FastAPI()
 @app.exception_handler(RequestValidationError)
@@ -50,3 +51,4 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         }
     )
 app.include_router(usuarios_router)
+app.include_router(auth_router)
