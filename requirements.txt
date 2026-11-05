@@ -1,0 +1,19 @@
+# Framework para crear la API REST
+fastapi
+
+# Servidor para ejecutar FastAPI
+uvicorn[standard]
+
+# ORM para trabajar con la base de datos
+sqlalchemy
+
+# Driver para conectar Python con PostgreSQL
+psycopg2-binary
+
+# Manejo de variables de entorno (.env)
+python-dotenv
+
+# Validación de datos y correos electrónicos
+pydantic[email]
+
+alembic
