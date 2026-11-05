@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, Request
 from sqlalchemy.orm import Session
-
+from fastapi.middleware.cors import CORSMiddleware
 from app.database import get_db
 from models.usuario import Usuario
 from schemas.usuario import UsuarioResponse
@@ -15,6 +15,16 @@ from routers.roles import router as roles_router
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     errores = []
