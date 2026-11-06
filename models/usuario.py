@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from app.database import Base
+from sqlalchemy.orm import relationship
 
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -12,3 +13,4 @@ class Usuario(Base):
     password = Column(String, nullable=False)
     activo = Column(Boolean, default=True)
     id_rol = Column(Integer, ForeignKey("roles.id"), nullable =False)
+    rol = relationship("Rol")
