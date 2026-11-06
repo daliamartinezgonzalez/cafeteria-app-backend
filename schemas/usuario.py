@@ -28,6 +28,7 @@ class UsuarioUpdate(BaseModel):
     apellido_p: str | None = Field(default=None, min_length=2, max_length=50)
     apellido_m: str | None = Field(default=None, max_length=50)
     email: EmailStr | None =None
+    activo: bool | None =None
     id_rol: int | None = Field(default=None, gt=0)
 
 class UsuarioReplace(BaseModel):
@@ -35,5 +36,5 @@ class UsuarioReplace(BaseModel):
     apellido_p: str = Field(min_length=2, max_length=50)
     apellido_m: str | None = Field(default=None, max_length=50)
     email: EmailStr
-    activo: bool
+    activo: bool 
     id_rol: int = Field(gt=0)

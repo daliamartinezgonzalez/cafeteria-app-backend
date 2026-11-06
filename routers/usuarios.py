@@ -49,7 +49,7 @@ def modificar_usuario(
     id: int,
     datos: UsuarioUpdate,
     db: Session = Depends(get_db),
-    usuario=Depends(requiere_permiso("eliminar.editar"))
+    usuario=Depends(requiere_permiso("usuarios.editar"))
 ):
     return actualizar_usuario(id, datos, db)
 
