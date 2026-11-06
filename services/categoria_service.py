@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from models.categoria import Categoria
+from models.bebida import Bebida
 
 def obtener_categorias(db: Session):
     return db.query(Categoria).all()
@@ -54,8 +55,15 @@ def editar_categoria(id: int, datos, db: Session):
 
 def eliminar_categoria(id: int, db: Session):
     categoria = obtener_categoria(id, db)
-
+    # se verifica si existen bebidas relacionadas con la categoria
+    bebidas_asociadas = db.query(Bebida).filter(
+        Bebida.id_categoria == id
+    ).first()
+    if bebidas_asociadas:
+        raise HTTPException(
+            status_code=409,
+            detail="No se puede eliminar la categoría porque tiene bebidas asociadas"
+        )
     db.delete(categoria)
     db.commit()
-
-    return {"mensaje": "Categoria eliminada correctamente"}
+    return {"mensaje": "Categoría eliminada correctamente"}
