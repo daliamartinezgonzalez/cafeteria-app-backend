@@ -2,6 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from models.categoria import Categoria
 from models.bebida import Bebida
+from sqlalchemy import func
 
 def obtener_categorias(db: Session):
     return db.query(Categoria).all()
@@ -18,7 +19,11 @@ def obtener_categoria(id: int, db: Session):
     return categoria
 
 def crear_categoria(datos,db:Session):
-    categoria_existente = db.query(Categoria).filter(Categoria.nombre_categoria== datos.nombre_categoria).first()
+    nombre = datos.nombre_categoria.strip()
+
+    categoria_existente = db.query(Categoria).filter(
+        func.lower(Categoria.nombre_categoria) == nombre.lower()
+    ).first()
     # como el nombre es unico se muestra el error en caso de que se quiera registrar uno igual
     if categoria_existente: 
         raise HTTPException(
@@ -36,8 +41,9 @@ def editar_categoria(id: int, datos, db: Session):
     categoria = obtener_categoria(id, db)
 
     if datos.nombre_categoria != categoria.nombre_categoria:
+        nombre = datos.nombre_categoria.strip()
         categoria_existente = db.query(Categoria).filter(
-            Categoria.nombre_categoria == datos.nombre_categoria
+            func.lower(Categoria.nombre_categoria) == nombre.lower()
         ).first()
 
         if categoria_existente:

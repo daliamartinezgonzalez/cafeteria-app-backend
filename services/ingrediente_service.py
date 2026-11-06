@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from models.ingrediente import Ingrediente
 from models.bebida import Bebida
 from models.bebida_ingrediente import BebidaIngrediente
@@ -19,7 +20,10 @@ def obtener_ingrediente(id: int, db: Session):
     return ingrediente
 
 def crear_ingrediente(datos,db:Session):
-    ingrediente_existente = db.query(Ingrediente).filter(Ingrediente.nombre== datos.nombre).first()
+    nombre = datos.nombre.strip()
+    ingrediente_existente = db.query(Ingrediente).filter(
+        func.lower(Ingrediente.nombre) == nombre.lower()
+    ).first()
     # como el nombre es unico se muestra el error en caso de que se quiera registrar uno igual
     if ingrediente_existente: 
         raise HTTPException(
@@ -37,8 +41,9 @@ def editar_ingrediente(id: int, datos, db: Session):
     ingrediente = obtener_ingrediente(id, db)
 
     if datos.nombre != ingrediente.nombre:
+        nombre = datos.nombre.strip()
         ingrediente_existente = db.query(Ingrediente).filter(
-            Ingrediente.nombre == datos.nombre
+            func.lower(Ingrediente.nombre) == nombre.lower()
         ).first()
 
         if ingrediente_existente:
