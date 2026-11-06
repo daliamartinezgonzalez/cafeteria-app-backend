@@ -13,7 +13,7 @@ from models.rol import Rol
 from models.permiso import Permiso
 from models.rol_permiso import RolPermiso
 from models.categoria import Categoria
-
+from models.ingrediente import Ingrediente
 
 config = context.config  # pylint: disable=no-member
 

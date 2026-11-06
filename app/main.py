@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse
 from routers.auth import router as auth_router
 from routers.roles import router as roles_router
 from routers.categorias import router as categorias_router
+from routers.ingredientes import router as ingredientes_router
 
 
 app = FastAPI()
@@ -67,3 +68,4 @@ app.include_router(usuarios_router)
 app.include_router(auth_router)
 app.include_router(roles_router)
 app.include_router(categorias_router)
+app.include_router(ingredientes_router)
