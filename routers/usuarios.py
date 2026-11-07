@@ -41,7 +41,7 @@ def reemplazar_usuario(
     db: Session = Depends(get_db),
     usuario=Depends(requiere_permiso("usuarios.editar"))
 ):
-    return editar_usuario(id, datos, db)
+    return editar_usuario(id, datos, db,usuario)
 
 # para editar un usuario parcialmente
 @router.patch("/{id}", response_model=UsuarioResponse)
@@ -51,7 +51,7 @@ def modificar_usuario(
     db: Session = Depends(get_db),
     usuario=Depends(requiere_permiso("usuarios.editar"))
 ):
-    return actualizar_usuario(id, datos, db)
+    return actualizar_usuario(id, datos, db,usuario)
 
 # eliminar un usuario
 @router.delete("/{id}")

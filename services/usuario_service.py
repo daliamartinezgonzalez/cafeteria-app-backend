@@ -52,7 +52,13 @@ def crear_usuario(datos, db: Session):
     return usuario
 
 # para editar usuario
-def editar_usuario(id: int, datos, db: Session):
+def editar_usuario(id: int, datos, db: Session,usuario_actual: Usuario):
+    
+    if usuario_actual.id == id:
+        raise HTTPException(
+            status_code=403,
+            detail="No puedes modificar tu propia cuenta."
+        )
     usuario = obtener_usuario(id, db)
 
     if datos.email != usuario.email:
@@ -85,7 +91,12 @@ def editar_usuario(id: int, datos, db: Session):
     return usuario
 
 # para editar usuario completamente
-def actualizar_usuario(id: int, datos, db: Session):
+def actualizar_usuario(id: int, datos, db: Session, usuario_actual: Usuario):
+    if usuario_actual.id == id:
+        raise HTTPException(
+            status_code=403,
+            detail="No puedes modificar tu propia cuenta."
+        )
     usuario = obtener_usuario(id, db)
 
     datos_actualizados = datos.model_dump(exclude_unset=True)
