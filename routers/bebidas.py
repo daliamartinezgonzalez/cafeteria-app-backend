@@ -22,7 +22,6 @@ router = APIRouter(
 @router.get("/", response_model=list[BebidaResponse])
 def listar_bebidas(
     db: Session = Depends(get_db),
-    usuario=Depends(requiere_permiso("bebidas.ver"))
 ):
     return obtener_bebidas(db)
 
@@ -30,7 +29,6 @@ def listar_bebidas(
 def consultar_bebida(
     id: int,
     db: Session = Depends(get_db),
-    usuario=Depends(requiere_permiso("bebidas.ver"))
 ):
     return obtener_bebida(id, db)
 

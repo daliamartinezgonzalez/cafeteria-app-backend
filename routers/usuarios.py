@@ -56,4 +56,4 @@ def modificar_usuario(
 # eliminar un usuario
 @router.delete("/{id}")
 def borrar_usuario(id: int, db: Session = Depends(get_db), usuario=Depends(requiere_permiso("usuarios.eliminar"))):
-    return eliminar_usuario(id, db)
+    return eliminar_usuario(id, db, usuario)

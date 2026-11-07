@@ -132,8 +132,14 @@ def actualizar_usuario(id: int, datos, db: Session, usuario_actual: Usuario):
 
     return usuario
 
+# para eliminar usuario
+def eliminar_usuario(id: int, db: Session, usuario_actual: Usuario):
+    if usuario_actual.id == id:
+        raise HTTPException(
+            status_code=403,
+            detail="No puedes eliminar tu propia cuenta."
+        )
 
-def eliminar_usuario(id: int, db: Session):
     usuario = obtener_usuario(id, db)
 
     db.delete(usuario)

@@ -1,4 +1,5 @@
 from sqlalchemy import Integer, Column, String, ForeignKey, Float
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 class Bebida(Base):
@@ -11,3 +12,10 @@ class Bebida(Base):
     tamaño = Column(String, nullable=False)
     imagen_url = Column(String, nullable=False)
     id_categoria = Column(Integer, ForeignKey("categorias.id"), nullable=False)
+
+    categoria = relationship("Categoria")
+    ingredientes = relationship(
+        "BebidaIngrediente",
+        back_populates="bebida",
+        cascade="all, delete-orphan"
+    )

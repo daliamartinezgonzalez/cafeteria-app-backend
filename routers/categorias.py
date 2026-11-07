@@ -13,7 +13,6 @@ router = APIRouter(
 @router.get("/", response_model=list[CategoriaResponse])
 def listar_categorias(
     db: Session = Depends(get_db),
-    usuario=Depends(requiere_permiso("categorias.ver"))
 ):
     return obtener_categorias(db)
 
@@ -21,7 +20,6 @@ def listar_categorias(
 def consultar_categoria(
     id: int,
     db: Session = Depends(get_db),
-    usuario=Depends(requiere_permiso("categorias.ver"))
 ):
     return obtener_categoria(id, db)
 

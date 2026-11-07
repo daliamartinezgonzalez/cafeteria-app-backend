@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, ForeignKey, Float, String
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 class BebidaIngrediente(Base):
@@ -8,3 +9,17 @@ class BebidaIngrediente(Base):
     id_ingrediente = Column(Integer, ForeignKey("ingredientes.id"), primary_key=True)
     cantidad = Column(Float, nullable=False)
     unidad = Column(String(20), nullable=False)
+
+    bebida = relationship(
+        "Bebida",
+        back_populates="ingredientes"
+    )
+
+    ingrediente = relationship(
+        "Ingrediente",
+        back_populates="bebidas"
+    )
+
+    @property
+    def nombre(self):
+        return self.ingrediente.nombre
